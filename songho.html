@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Songho — Jeu Traditionnel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="songho.css" />
+</head>
+<body>
+
+  <!-- ═══════════════ EN-TÊTE ═══════════════ -->
+  <header class="site-header">
+    <div class="header-emblem">
+      <span class="emblem-seed">●</span>
+      <span class="emblem-seed">●</span>
+      <span class="emblem-seed">●</span>
+    </div>
+    <h1 class="site-title">SONGHO</h1>
+    <p class="site-subtitle">Jeu traditionnel Ewondo &amp; Bulu · 2 joueurs</p>
+  </header>
+
+  <!-- ═══════════════ SCORES ═══════════════ -->
+  <section class="scores-section">
+    <div class="score-card" id="card-nord">
+      <span class="score-role">Joueur Nord</span>
+      <span class="score-name" id="name-nord">JOUEUR 1</span>
+      <span class="score-number" id="score-nord">0</span>
+      <span class="score-label">graines</span>
+    </div>
+
+    <div class="score-divider">
+      <span class="vs-text">VS</span>
+    </div>
+
+    <div class="score-card" id="card-sud">
+      <span class="score-role">Joueur Sud</span>
+      <span class="score-name" id="name-sud">JOUEUR 2</span>
+      <span class="score-number" id="score-sud">0</span>
+      <span class="score-label">graines</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MESSAGE ═══════════════ -->
+  <div class="message-bar" id="message-bar">
+    Chargement…
+  </div>
+
+  <!-- ═══════════════ PLATEAU ═══════════════ -->
+  <main class="board-container">
+
+    <!-- Nord -->
+    <div class="territory-label territory-label--nord" id="label-nord">
+      <span class="tl-arrow">←</span>
+      <span class="tl-name" id="tl-name-nord">JOUEUR 1</span>
+      <span class="tl-arrow">→</span>
+    </div>
+
+    <div class="col-indices" id="col-idx-nord"></div>
+    <div class="board-row" id="row-nord"></div>
+
+    <!-- Séparateur central -->
+    <div class="board-divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">◆</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="board-row" id="row-sud"></div>
+    <div class="col-indices" id="col-idx-sud"></div>
+
+    <!-- Sud -->
+    <div class="territory-label territory-label--sud" id="label-sud">
+      <span class="tl-arrow">←</span>
+      <span class="tl-name" id="tl-name-sud">JOUEUR 2</span>
+      <span class="tl-arrow">→</span>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════ CONTRÔLES ═══════════════ -->
+  <div class="controls-bar">
+    <button class="btn btn--ghost" onclick="toggleRules()">📖 Règles</button>
+    <button class="btn btn--primary" onclick="resetGame()">🔄 Nouvelle partie</button>
+    <button class="btn btn--ghost" onclick="openNameModal()">✏️ Joueurs</button>
+  </div>
+
+  <!-- ═══════════════ PANNEAU RÈGLES ═══════════════ -->
+  <aside class="rules-panel" id="rules-panel">
+    <h3 class="rules-heading">🌱 Mise en place</h3>
+    <p>2 rangées de 7 cases. Chaque case commence avec 5 graines (70 au total). Nord en haut, Sud en bas, face à face.</p>
+
+    <h3 class="rules-heading">🔄 Semaille</h3>
+    <p>Choisissez une case de votre territoire. Ramassez toutes ses graines et déposez-les une par une : dans votre camp de <strong>droite à gauche</strong>, puis dans le camp adverse de <strong>gauche à droite</strong>. Si vous avez plus de 13 graines, sautez la case de départ au premier passage.</p>
+
+    <h3 class="rules-heading">🌾 Captures</h3>
+    <p>La dernière graine tombe dans le camp adverse (sauf case 1) sur une case qui contient 1, 2 ou 3 graines → vous capturez 2 à 4 graines. Enchaînez les cases précédentes (vers la droite) si elles contiennent 2, 3 ou 4 graines. Interdit de vider complètement le camp adverse.</p>
+
+    <h3 class="rules-heading">🤝 Solidarité</h3>
+    <p>Si l'adversaire n'a plus de graines, vous devez lui envoyer au moins 7 graines. Si impossible : fin de partie.</p>
+
+    <h3 class="rules-heading">🚫 Interdit</h3>
+    <p>Semer 1 ou 2 graines chez l'adversaire en partant de votre case 7 est interdit (sauf solidarité).</p>
+
+    <h3 class="rules-heading">🏆 Victoire</h3>
+    <p>Premier à capturer <strong>40 graines ou plus</strong>. Moins de 10 graines sur le plateau = fin. Égalité si les deux ont 39 ou moins.</p>
+  </aside>
+
+  <!-- ═══════════════ MODAL ═══════════════ -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box" id="modal-box">
+      <h2 class="modal-title" id="modal-title">Partie terminée</h2>
+      <p class="modal-body" id="modal-body">…</p>
+      <div class="modal-actions">
+        <button class="btn btn--primary" id="modal-btn" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="songho.js"></script>
+</body>
+</html>
